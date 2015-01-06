@@ -3,6 +3,8 @@
 
 # anon
 # Anonymises e-mail addresses in a block of text.
+#
+# All in one file for ease of transfer/use by the rest of Reevoo.
 
 require 'csv'
 
@@ -112,7 +114,9 @@ if __FILE__ == $0
     abort "No columns specified" if ARGV[3].nil?
     cols = ARGV[3].split(',').map(&:to_i) || abort("Columns should be specified as 1,2,3")
 
-    Anon::CsvAnonymiser.anonymise(ARGV[1], ARGV[2], cols)
+    show_header = ARGV[4] != 'noheader'
+
+    Anon::CsvAnonymiser.anonymise(ARGV[1], ARGV[2], cols, show_header)
   else # includes 'help'
     puts "Anonymises files.
 
@@ -123,6 +127,8 @@ Anonymise any valid e-mail addresses:
 
 Replace the data in specific columns of a CSV:
   ruby anon.rb csv INFILE OUTFILE COL1,COL2
+  ruby anon.rb csv INFILE OUTFILE COL1,COL2 noheader
+Note that the first column is column 0 when numbering columns.
 
 Show this message:
   ruby anon.rb help"
