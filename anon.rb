@@ -5,8 +5,12 @@
 # Anonymises e-mail addresses in a block of text.
 #
 # All in one file for ease of transfer/use by the rest of Reevoo.
+#
+# Setup with:
+#   gem install time_difference
 
 require 'csv'
+require 'time_difference'
 
 module Anon
   # Anonymiser base class
@@ -28,6 +32,34 @@ module Anon
 
       @anonymised_emails[personal_email]     
     end
+
+    def start_progress
+      @progress = 0
+      @started = Time.now
+      update_progress
+    end
+
+    def increment_progress
+      @progress += 1
+      update_progress
+    end
+
+    def complete_progress
+      stopped = Time.now
+      duration = TimeDifference.between(@started, stopped).in_seconds
+      average = (@progress.to_f / duration.to_f).round
+      puts "Read #{@progress} lines in #{duration} seconds (#{average} lines/s)"
+      puts "#{@anonymised_emails.count} unique e-mails replaced"
+    end
+
+    private
+
+    def update_progress
+      if @progress % 100 == 0
+        print "Working... #{@progress}\r"
+        $stdout.flush
+      end
+    end
   end
 
   # Anonymises any detected e-mail address in a text file.
@@ -42,9 +74,13 @@ module Anon
     end
 
     def anonymise!
+      start_progress
       map_lines(@incoming_filename, @outgoing_filename) do |line|
-        anonymise_line(line)
+        line = anonymise_line(line)
+        increment_progress
+        line
       end
+      complete_progress
     end
 
     private 
@@ -63,7 +99,7 @@ module Anon
 
     def anonymise_line(line)
       line.gsub(EMAIL_REGEX) { |email| anonymous_email(email) }
-    end    
+    end   
   end
 
   # Replaces the contents of a set of columns with anonymous e-mails.
@@ -76,13 +112,15 @@ module Anon
     end
 
     def anonymise!
+      start_progress
       map_lines(@incoming_filename, @outgoing_filename) do |line|
         @columns_to_anonymise.each do |anon_index|
           line[anon_index] = anonymous_email(line[anon_index])
         end
-
+        increment_progress
         line
       end
+      complete_progress
     end
 
     private 
