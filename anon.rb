@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-# ReturnToSender
+# anon
 # Anonymises e-mail addresses in a block of text.
 
 require 'csv'
 
-module ReturnToSender
+module Anon
   # Anonymiser base class
   class Anonymiser
 
@@ -105,26 +105,26 @@ if __FILE__ == $0
   case(ARGV[0])
   when 'text'
     abort "No filename specified" if ARGV[1].nil? || ARGV[2].nil?
-    ReturnToSender::TextAnonymiser.anonymise(ARGV[1], ARGV[2])
+    Anon::TextAnonymiser.anonymise(ARGV[1], ARGV[2])
   when 'csv'
     abort "No filename specified" if ARGV[1].nil? || ARGV[2].nil?
     
     abort "No columns specified" if ARGV[3].nil?
     cols = ARGV[3].split(',').map(&:to_i) || abort("Columns should be specified as 1,2,3")
 
-    ReturnToSender::CsvAnonymiser.anonymise(ARGV[1], ARGV[2], cols)
+    Anon::CsvAnonymiser.anonymise(ARGV[1], ARGV[2], cols)
   else # includes 'help'
     puts "Anonymises files.
 
 USAGES
 ------
 Anonymise any valid e-mail addresses:
-  r2s text INFILE OUTFILE
+  ruby anon.rb text INFILE OUTFILE
 
 Replace the data in specific columns of a CSV:
-  r2s csv INFILE OUTFILE COL1,COL2
+  ruby anon.rb csv INFILE OUTFILE COL1,COL2
 
 Show this message:
-  r2s help"
+  ruby anon.rb help"
   end
 end
