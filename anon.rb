@@ -18,11 +18,15 @@ module Anon
 
     protected
 
-    def anonymous_email
-      @anonymised_emails ||= 0
-      @anonymised_emails += 1
+    def anonymous_email(personal_email)
+      @anonymised_emails ||= {}
+      
+      unless @anonymised_emails.has_key? personal_email
+        next_count = @anonymised_emails.count + 1
+        @anonymised_emails[personal_email] = "anon#{next_count}@reevoo.com"
+      end
 
-      "anon#{@anonymised_emails}@reevoo.com"
+      @anonymised_emails[personal_email]     
     end
   end
 
@@ -58,7 +62,7 @@ module Anon
     end
 
     def anonymise_line(line)
-      line.gsub(EMAIL_REGEX) { anonymous_email }
+      line.gsub(EMAIL_REGEX) { |email| anonymous_email(email) }
     end    
   end
 
@@ -74,7 +78,7 @@ module Anon
     def anonymise!
       map_lines(@incoming_filename, @outgoing_filename) do |line|
         @columns_to_anonymise.each do |anon_index|
-          line[anon_index] = anonymous_email
+          line[anon_index] = anonymous_email(line[anon_index])
         end
 
         line
@@ -96,10 +100,6 @@ module Anon
         end
       end
     end
-
-    def anonymise_line(line)
-      line.gsub(EMAIL_REGEX) { anonymous_email }
-    end
   end
 end
 
@@ -119,18 +119,20 @@ if __FILE__ == $0
     Anon::CsvAnonymiser.anonymise(ARGV[1], ARGV[2], cols, show_header)
   else # includes 'help'
     puts "Anonymises files.
+ruby anon.rb [text|csv] INFILE OUTFILE [options]
 
-USAGES
-------
-Anonymise any valid e-mail addresses:
-  ruby anon.rb text INFILE OUTFILE
+There are two types of processing:
+  text - anonymise any valid e-mail address in the text
+  csv  - anonymise the content of a specific column in a CSV
 
-Replace the data in specific columns of a CSV:
-  ruby anon.rb csv INFILE OUTFILE COL1,COL2
-  ruby anon.rb csv INFILE OUTFILE COL1,COL2 noheader
+To anonymise any e-mail address in a file, use:
+  ruby anon.rb text in.txt out.txt
+
+For CSV, you must specify the columns to anonymise, for example:
+  ruby anon.rb csv in.csv out.csv 0,2,5
 Note that the first column is column 0 when numbering columns.
 
-Show this message:
-  ruby anon.rb help"
+You can also specify the noheader option if the CSV has no header:
+  ruby anon.rb csv in.csv out.csv 1 noheader"
   end
 end
