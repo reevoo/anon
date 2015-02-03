@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require 'time_difference'
+
 module Anon
   # Anonymiser base class
   class Base
