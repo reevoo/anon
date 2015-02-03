@@ -2,4 +2,4 @@
 # encoding: utf-8
 
 require 'anon/cli'
-Anon::CLI.parse(ARGV)
+Anon::CLI.parse!(ARGV)

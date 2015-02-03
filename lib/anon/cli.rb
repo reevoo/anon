@@ -2,16 +2,16 @@ module Anon
   # Anonymiser base class
   module CLI
 
-    def parse!(args)
+    def self.parse!(args)
       command, *command_args = args
-      if respond_to?(command)
+      if (!command.nil?) && respond_to?(command.to_sym)
         send(command, *command_args)
       else
         help
       end
     end
 
-    def text(input_filename, output_filename)
+    def self.text(input_filename=nil, output_filename=nil)
       require 'anon/text'
 
       abort "No filename specified" if input_filename.nil? || output_filename.nil?
@@ -19,7 +19,7 @@ module Anon
       Anon::Text.anonymise!(input_filename, output_filename)
     end
 
-    def csv(input_filename, output_filename, columns, show_header='')
+    def self.csv(input_filename=nil, output_filename=nil, columns=nil, show_header='')
       require 'anon/csv'
 
       abort "No filename specified" if input_filename.nil? || output_filename.nil?
@@ -30,7 +30,7 @@ module Anon
       Anon::Csv.anonymise!(input_filename, output_filename, column_array, show_header)
     end
 
-    def help
+    def self.help
       puts "Anonymises files.
 anon [text|csv] INFILE OUTFILE [options]
 
