@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.homepage     = 'https://github.com/reevoo/anon'
   s.license      = 'MIT'
 
-  s.files        = Dir.glob("{bin,lib,test}/**/*.rb")
+  s.files        = Dir.glob("{bin,lib,spec}/**/*.rb")
   s.require_path = 'lib'
   s.executables  = ['anon']
 
