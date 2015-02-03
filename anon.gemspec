@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
 
   s.files        = Dir.glob("{bin,lib,test}/**/*.rb")
   s.require_path = 'lib'
-  s.executables  << 'anon'
+  s.executables  = ['anon']
 
   s.add_runtime_dependency 'time_difference'
 
