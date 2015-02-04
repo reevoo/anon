@@ -39,10 +39,10 @@ There are two types of processing:
   csv  - anonymise the content of a specific column in a CSV
 
 To anonymise any e-mail address in a file, use:
-  ruby anon.rb text in.txt out.txt
+  anon text in.txt out.txt
 
 For CSV, you must specify the columns to anonymise, for example:
-  ruby anon.rb csv in.csv out.csv 0,2,5
+  anon csv in.csv out.csv 0,2,5
 Note that the first column is column 0 when numbering columns.
 
 You can also specify the noheader option if the CSV has no header:
