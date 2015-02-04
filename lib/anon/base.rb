@@ -17,7 +17,7 @@ module Anon
       
       unless @anonymised_emails.has_key? personal_email
         next_count = @anonymised_emails.count + 1
-        @anonymised_emails[personal_email] = "anon#{next_count}@reevoo.com"
+        @anonymised_emails[personal_email] = "anon#{next_count}@anon.com"
       end
 
       @anonymised_emails[personal_email]     
