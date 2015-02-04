@@ -37,7 +37,12 @@ module Anon
     def complete_progress
       stopped = Time.now
       duration = TimeDifference.between(@started, stopped).in_seconds
-      average = (@progress.to_f / duration.to_f).round
+      if duration == 0
+        average = @progress
+      else
+        average = (@progress.to_f / duration.to_f).round
+      end
+      
       puts "Read #{@progress} lines in #{duration} seconds (#{average} lines/s)"
       puts "#{@anonymised_emails.count} unique e-mails replaced"
     end
