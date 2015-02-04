@@ -30,10 +30,10 @@ module Anon
     # Reads each line from the incoming file, processes it using the block
     # and saves the return value of the block to the outgoing file.
     def map_lines(incoming_filename, outgoing_filename)
-      CSV.open(incoming_filename, 'r') do |infile|
+      ::CSV.open(incoming_filename, 'r') do |infile|
         headers = @has_header ? infile.gets : nil
 
-        CSV.open(outgoing_filename, 'w', write_headers: @has_header, headers: headers) do |outfile|
+        ::CSV.open(outgoing_filename, 'w', write_headers: @has_header, headers: headers) do |outfile|
             while inline = infile.gets do
               outfile.puts yield(inline)
             end

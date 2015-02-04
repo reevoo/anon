@@ -27,7 +27,7 @@ module Anon
       column_array = columns.split(',').map(&:to_i) || abort("Columns should be specified as 1,2,3")
 
       show_header = (show_header != 'noheader')
-      Anon::Csv.anonymise!(input_filename, output_filename, column_array, show_header)
+      Anon::CSV.anonymise!(input_filename, output_filename, column_array, show_header)
     end
 
     def self.help
