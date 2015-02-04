@@ -1,10 +1,12 @@
 # encoding: utf-8
 
+require 'time_difference'
+
 module Anon
   # Anonymiser base class
-  class Anonymiser
+  class Base
 
-    def self.anonymise(*args)
+    def self.anonymise!(*args)
       new(*args).anonymise!
     end
 

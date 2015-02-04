@@ -1,8 +1,11 @@
 # encoding: utf-8
 
+require 'anon/base'
+require 'csv'
+
 module Anon 
   # Replaces the contents of a set of columns with anonymous e-mails.
-  class CsvAnonymiser < Anonymiser
+  class CSV < Base
     def initialize(incoming_filename, outgoing_filename, columns_to_anonymise, has_header=true)
       @incoming_filename = incoming_filename
       @outgoing_filename = outgoing_filename
