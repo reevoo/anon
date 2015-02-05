@@ -4,6 +4,13 @@ Because ISO say so.
 
 anon can be used to replace personal e-mail addresses with anonymous (fake) ones. This is useful when transferring personally sensitive data.
 
+## Features
+
+- Scans and replaces e-mail addresses in a file.
+- Replaces all data in one or more CSV columns with anonymous e-mail addresses.
+- The same personal e-mail address will be replaced with the same anonymous e-mail address within the file.
+- Command-Line Interface with I/O support
+
 ## Setup
 
 On your command line:
