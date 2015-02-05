@@ -33,6 +33,8 @@ module Anon
       input = File.open(input_filename)
       output = File.open(output_filename, 'w')
       Anon::CSV.anonymise!(input, output, column_array, show_header)
+    rescue Errno::ENOENT, IOError => e
+      abort e.message
     end
 
     def self.help
