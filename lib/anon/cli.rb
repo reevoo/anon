@@ -16,7 +16,9 @@ module Anon
 
       abort "No filename specified" if input_filename.nil? || output_filename.nil?
 
-      Anon::Text.anonymise!(input_filename, output_filename)
+      input = File.open(input_filename)
+      output = File.open(output_filename, 'w')
+      Anon::Text.anonymise!(input, output)
     end
 
     def self.csv(input_filename=nil, output_filename=nil, columns=nil, show_header='')
@@ -27,7 +29,10 @@ module Anon
       column_array = columns.split(',').map(&:to_i) || abort("Columns should be specified as 1,2,3")
 
       show_header = (show_header != 'noheader')
-      Anon::CSV.anonymise!(input_filename, output_filename, column_array, show_header)
+
+      input = File.open(input_filename)
+      output = File.open(output_filename, 'w')
+      Anon::CSV.anonymise!(input, output, column_array, show_header)
     end
 
     def self.help

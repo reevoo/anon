@@ -7,8 +7,8 @@ module Anon
   # Replaces the contents of a set of columns with anonymous e-mails.
   class CSV < Base
     def initialize(incoming_filename, outgoing_filename, columns_to_anonymise, has_header=true)
-      @i = File.open(incoming_filename)
-      @o = File.open(outgoing_filename, 'w')
+      @input = incoming_filename
+      @output = outgoing_filename
       @columns_to_anonymise = columns_to_anonymise
       @has_header = has_header
     end
@@ -28,11 +28,11 @@ module Anon
     private
 
     def input
-      @_input ||= ::CSV.new(@i)
+      @_input ||= ::CSV.new(@input)
     end
 
     def output
-      @_output ||= ::CSV.new(@o, write_headers: @has_header, headers: @headers)
+      @_output ||= ::CSV.new(@output, write_headers: @has_header, headers: @headers)
     end
 
     # Reads each line from the incoming file, processes it using the block
