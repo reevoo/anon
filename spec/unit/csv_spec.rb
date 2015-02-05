@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'anon/csv'
 
 describe Anon::CSV do
