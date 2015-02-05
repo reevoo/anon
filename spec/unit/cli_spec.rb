@@ -23,7 +23,7 @@ describe Anon::CLI do
       let(:input_filename) { 'notarealfile' }
 
       it 'aborts with a message' do
-        expect { subject }.to raise_error SystemExit, "No such file or directory - notarealfile"
+        expect { subject }.to raise_error SystemExit, /No such file or directory/
       end
     end
 
