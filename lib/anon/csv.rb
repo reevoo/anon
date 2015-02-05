@@ -3,19 +3,19 @@
 require 'anon/base'
 require 'csv'
 
-module Anon 
+module Anon
   # Replaces the contents of a set of columns with anonymous e-mails.
   class CSV < Base
     def initialize(incoming_filename, outgoing_filename, columns_to_anonymise, has_header=true)
-      @incoming_filename = incoming_filename
-      @outgoing_filename = outgoing_filename
+      @input = incoming_filename
+      @output = outgoing_filename
       @columns_to_anonymise = columns_to_anonymise
       @has_header = has_header
     end
 
     def anonymise!
       start_progress
-      map_lines(@incoming_filename, @outgoing_filename) do |line|
+      map_lines do |line|
         @columns_to_anonymise.each do |anon_index|
           line[anon_index] = anonymous_email(line[anon_index])
         end
@@ -25,19 +25,22 @@ module Anon
       complete_progress
     end
 
-    private 
+    private
+
+    def input
+      @_input ||= ::CSV.new(@input)
+    end
+
+    def output
+      @_output ||= ::CSV.new(@output, write_headers: @has_header, headers: @headers)
+    end
 
     # Reads each line from the incoming file, processes it using the block
     # and saves the return value of the block to the outgoing file.
-    def map_lines(incoming_filename, outgoing_filename)
-      ::CSV.open(incoming_filename, 'r') do |infile|
-        headers = @has_header ? infile.gets : nil
-
-        ::CSV.open(outgoing_filename, 'w', write_headers: @has_header, headers: headers) do |outfile|
-            while inline = infile.gets do
-              outfile.puts yield(inline)
-            end
-        end
+    def map_lines
+      @headers = @has_header ? input.gets : nil
+      while inline = input.gets do
+        output.puts yield(inline)
       end
     end
   end

@@ -10,13 +10,13 @@ module Anon
     EMAIL_REGEX = /([\w\!\#\z\%\&\'\*\+\-\/\=\?\\A\`{\|\}\~]+\.)*[\w\+-]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)/i
 
     def initialize(incoming_filename, outgoing_filename)
-      @incoming_filename = incoming_filename
-      @outgoing_filename = outgoing_filename
+      @input = incoming_filename
+      @output = outgoing_filename
     end
 
     def anonymise!
       start_progress
-      map_lines(@incoming_filename, @outgoing_filename) do |line|
+      map_lines do |line|
         line = anonymise_line(line)
         increment_progress
         line
@@ -24,22 +24,20 @@ module Anon
       complete_progress
     end
 
-    private 
+    private
+
+    attr_reader :input, :output
 
     # Reads each line from the incoming file, processes it using the block
     # and saves the return value of the block to the outgoing file.
-    def map_lines(incoming_filename, outgoing_filename)
-      File.open(incoming_filename, 'r') do |infile|
-        File.open(outgoing_filename, 'w') do |outfile|
-          infile.each_line do |inline|
-            outfile.puts yield(inline)
-          end
-        end
+    def map_lines
+      while inline = input.gets do
+        output.puts yield(inline)
       end
     end
 
     def anonymise_line(line)
       line.gsub(EMAIL_REGEX) { |email| anonymous_email(email) }
-    end   
+    end
   end
 end
