@@ -13,6 +13,7 @@ module Anon
       @has_header = has_header
     end
 
+    # Anonymises all content of the columns set in the initializer
     def anonymise!
       start_progress
       map_lines do |line|

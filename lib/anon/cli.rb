@@ -1,8 +1,10 @@
 module Anon
-  # Anonymiser base class
+  # Command Line Interface for Anon
   module CLI
 
+    # Parse the command and execute the desired command
     def self.parse!(args)
+      # Direct command to methods of this module
       command, *command_args = args
       if (!command.nil?) && respond_to?(command.to_sym)
         send(command, *command_args)
@@ -11,6 +13,7 @@ module Anon
       end
     end
 
+    # Anonymise all e-mails found in given text
     def self.text(input_filename=nil, output_filename=nil)
       require 'anon/text'
 
@@ -21,6 +24,7 @@ module Anon
       Anon::Text.anonymise!(input, output)
     end
 
+    # Anonymise all contents of the given CSV columns
     def self.csv(input_filename=nil, output_filename=nil, columns=nil, show_header='')
       require 'anon/csv'
 
@@ -37,6 +41,7 @@ module Anon
       abort e.message
     end
 
+    # Output a help message
     def self.help
       puts 'Anonymises files.
 anon [text|csv] INFILE OUTFILE [options]

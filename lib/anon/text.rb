@@ -14,6 +14,7 @@ module Anon
       @output = outgoing_filename
     end
 
+    # Anonymises any e-mail addresses found in the text
     def anonymise!
       start_progress
       map_lines do |line|

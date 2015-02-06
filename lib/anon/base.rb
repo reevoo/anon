@@ -6,12 +6,18 @@ module Anon
   # Anonymiser base class
   class Base
 
+    # Performs anonymisation
     def self.anonymise!(*args)
       new(*args).anonymise!
     end
 
     protected
 
+    # Helper method that replaces a personal e-mail
+    # with an anonymous one.
+    #
+    # The same personal e-mail will be replaced
+    # with the same anonymous e-mail.
     def anonymous_email(personal_email)
       @anonymised_emails ||= {}
       
@@ -23,17 +29,20 @@ module Anon
       @anonymised_emails[personal_email]     
     end
 
+    # Initializes progress tracking.
     def start_progress
       @progress = 0
       @started = Time.now
       update_progress
     end
 
+    # Adds 1 to the progress count.
     def increment_progress
       @progress += 1
       update_progress
     end
 
+    # End progress tracking and output the results.
     def complete_progress
       stopped = Time.now
       duration = TimeDifference.between(@started, stopped).in_seconds
