@@ -52,8 +52,8 @@ module Anon
         average = (@progress.to_f / duration.to_f).round
       end
 
-      puts "Read #{@progress} lines in #{duration} seconds (#{average} lines/s)"
-      puts "#{@anonymised_emails.count} unique e-mails replaced"
+      $stderr.puts "Read #{@progress} lines in #{duration} seconds (#{average} lines/s)"
+      $stderr.puts "#{@anonymised_emails.count} unique e-mails replaced"
     end
 
     private

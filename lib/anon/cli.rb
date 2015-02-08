@@ -1,56 +1,61 @@
+require 'thor'
+
 module Anon
   # Command Line Interface for Anon
-  module CLI
+  class CLI < Thor
 
-    # Parse the command and execute the desired command
-    def self.parse!(args)
-      command, infile, outfile, *command_args = args
+    desc 'csv [OPTIONS]', 'Anonymise a csv file'
 
-      return help if command.nil? || !respond_to?(command.to_sym)
-      abort 'No filename specified' if [infile, outfile].any?(&:nil?)
+    option :infile,
+           aliases: [:i],
+           desc: 'input filename to read from, reads from STDIN if ommited'
 
-      input = File.open(infile)
-      output = File.open(outfile, 'w')
+    option :outfile,
+           aliases: [:o],
+           desc: 'output filename write to, writes to STDOUT if ommited'
 
-      send(command, input, output, *command_args)
-    rescue Errno::ENOENT, IOError => e
-      abort e.message
+    option :columns,
+           aliases: [:c],
+           desc: 'columns to anonymise, zero indexed, comma separated e.g. 0,1,5',
+           required: true
+
+    option :header,
+           type: :boolean,
+           default: true,
+           desc: 'if the csv file to be processed has a header row'
+
+    def csv
+      require 'anon/csv'
+      Anon::CSV.anonymise!(input, output, column_array, options[:header])
     end
 
-    def self.text(input, output)
+    desc 'text [OPTIONS]', 'Anonymise a text file'
+
+    option :infile,
+           aliases: [:i],
+           desc: 'input filename to read from, reads from STDIN if ommited'
+
+    option :outfile,
+           aliases: [:o],
+           desc: 'output filename write to, writes to STDOUT if ommited'
+
+    def text
       require 'anon/text'
       Anon::Text.anonymise!(input, output)
     end
 
-    def self.csv(input, output, columns = nil, show_header = '')
-      require 'anon/csv'
+    private
 
-      abort 'No columns specified' if columns.nil?
-      column_array = columns.split(',').map(&:to_i) || abort('Columns should be specified as 1,2,3')
-      show_header = (show_header != 'noheader')
-
-      Anon::CSV.anonymise!(input, output, column_array, show_header)
+    def input
+      options[:infile] ? File.open(options[:infile]) : $stdin
     end
 
-    HELPTEXT = "Anonymises files.
-anon [text|csv] INFILE OUTFILE [options]
+    def output
+      options[:outfile] ? File.open(options[:outfile], 'w') : $stdout
+    end
 
-There are two types of processing:
-  text - anonymise any valid e-mail address in the text:
-  csv  - anonymise the content of a specific column in a CSV
-
-To anonymise any e-mail address in a file, use:
-  anon text in.txt out.txt
-
-For CSV, you must specify the columns to anonymise, for example:
-  anon csv in.csv out.csv 0,2,5
-Note that the first column is column 0 when numbering columns.
-
-You can also specify the noheader option if the CSV has no header:
-  ruby anon.rb csv in.csv out.csv 1 noheader"
-
-    def self.help
-      puts HELPTEXT
+    def column_array
+      options[:columns].split(',').map(&:to_i)
     end
   end
 end

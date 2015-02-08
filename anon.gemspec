@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.executables  = ['anon']
 
   s.add_runtime_dependency 'time_difference'
+  s.add_runtime_dependency 'thor'
 
   s.add_development_dependency 'rspec', '~> 3'
   s.add_development_dependency 'simplecov'
