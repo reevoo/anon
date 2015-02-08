@@ -7,7 +7,7 @@ describe Anon::Text do
 
   describe '#anonymise!' do
     let(:input_stream) do
-      StringIO.new " someone@foo.com then some other interesting text another@icecream.museum"
+      StringIO.new ' someone@foo.com then some other interesting text another@icecream.museum'
     end
 
     it 'anonymises any email addresss' do

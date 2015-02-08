@@ -20,13 +20,13 @@ module Anon
     # with the same anonymous e-mail.
     def anonymous_email(personal_email)
       @anonymised_emails ||= {}
-      
-      unless @anonymised_emails.has_key? personal_email
+
+      unless @anonymised_emails.key? personal_email
         next_count = @anonymised_emails.count + 1
         @anonymised_emails[personal_email] = "anon#{next_count}@anon.com"
       end
 
-      @anonymised_emails[personal_email]     
+      @anonymised_emails[personal_email]
     end
 
     # Initializes progress tracking.
@@ -51,7 +51,7 @@ module Anon
       else
         average = (@progress.to_f / duration.to_f).round
       end
-      
+
       puts "Read #{@progress} lines in #{duration} seconds (#{average} lines/s)"
       puts "#{@anonymised_emails.count} unique e-mails replaced"
     end
@@ -59,10 +59,12 @@ module Anon
     private
 
     def update_progress
-      if @progress % 100 == 0
-        print "Working... #{@progress}\r"
-        $stdout.flush
-      end
+      output_progress if @progress % 100 == 0
+    end
+
+    def output_progress
+      print "Working... #{@progress}\r"
+      $stdout.flush
     end
   end
 end
