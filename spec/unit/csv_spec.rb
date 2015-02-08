@@ -2,10 +2,15 @@ require 'spec_helper'
 require 'anon/csv'
 
 describe Anon::CSV do
-  let(:output_stream) { StringIO.new }
-  subject { described_class.new(input_stream, output_stream, [0], headers) }
 
-  describe '#anonymise!' do
+  describe '.anonymise!' do
+
+    before do
+      described_class.anonymise!(input_stream, output_stream, [0], headers)
+    end
+
+    let(:output_stream) { StringIO.new }
+
     context 'with headers' do
       let(:headers) { true }
 
@@ -16,7 +21,6 @@ describe Anon::CSV do
       end
 
       it 'anonymises the correct column' do
-        subject.anonymise!
         output_stream.rewind
         expect(output_stream.gets).to eq "email, foo, bar\n"
         expect(output_stream.gets).to eq "anon1@anon.com, 34545, bannas\n"
@@ -35,7 +39,6 @@ describe Anon::CSV do
       end
 
       it 'anonymises the correct column' do
-        subject.anonymise!
         output_stream.rewind
         expect(output_stream.gets).to eq "anon1@anon.com, 2456, satsuma\n"
         expect(output_stream.gets).to eq "anon2@anon.com, 34545, bannas\n"
