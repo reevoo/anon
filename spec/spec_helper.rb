@@ -1,5 +1,5 @@
-require 'simplecov'
-SimpleCov.start
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
 
 def capture_stdout
   real_stdout = $stdout
