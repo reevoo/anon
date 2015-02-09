@@ -30,12 +30,12 @@ A few common use cases:
 
 * Replace all valid e-mail addresses in the file personal.txt with anonymous e-mails. Save the new file as anonymous.txt:
 ```
-anon text personal.txt anonymous.txt
+anon text -i personal.txt -o anonymous.txt
 ```
 
 * Replace the contents of column 0 and 2 in the file personal.csv with anonymous e-mails. Save the new file as anonymous.csv. The file does not have headers:
 ```
-anon csv personal.csv anonymous.csv 0,2 noheader
+anon csv -i personal.csv -o anonymous.csv -c 0,2 --no-header
 ```
 
 ## In-Code Usage
@@ -43,10 +43,16 @@ anon csv personal.csv anonymous.csv 0,2 noheader
 ```ruby
 
 require 'anon/text'
+
+input = File.read('in.txt')
+output = File.read('out.txt', 'w')
+
+Anon::Text.anonymise! input, output
+
 require 'anon/csv'
 
-Anon::Text.anonymise! 'in.txt', 'out.txt'
-Anon::CSV.anonymise!  'in.csv', 'out.csv', 
+input = File.read('in.csv')
+Anon::CSV.anonymise!  input, $stdout,
   columns_to_anonymise=[0, 2], 
   has_header=false
 
