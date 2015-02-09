@@ -1,5 +1,10 @@
 # anon
 
+[![Gem Version](https://badge.fury.io/rb/anon.svg)](http://badge.fury.io/rb/anon)
+[![Code Climate](https://codeclimate.com/github/reevoo/anon/badges/gpa.svg)](https://codeclimate.com/github/reevoo/anon)
+[![Test Coverage](https://codeclimate.com/github/reevoo/anon/badges/coverage.svg)](https://codeclimate.com/github/reevoo/anon)
+[![Build Status](https://travis-ci.org/reevoo/anon.svg?branch=master)](https://travis-ci.org/reevoo/anon)
+
 Because ISO say so.
 
 anon can be used to replace personal e-mail addresses with anonymous (fake) ones. This is useful when transferring personally sensitive data.
