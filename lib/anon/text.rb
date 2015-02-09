@@ -7,7 +7,7 @@ module Anon
   class Text < Base
     # From the email regex research: http://fightingforalostcause.net/misc/2006/compare-email-regex.php
     # Authors: James Watts and Francisco Jose Martin Moreno
-    EMAIL_REGEX = /([\w\!\#\z\%\&\'\*\+\-\/\=\?\\A\`{\|\}\~]+\.)*[\w\+-]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)/i
+    EMAIL_REGEX = /([\w\!\#\z\%\&\'\*\+\-\/\=\?\\A\`{\|\}\~]+\.)*[\w\+-]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)/i # rubocop:disable Metrics/LineLength
 
     def initialize(incoming_filename, outgoing_filename)
       @input = incoming_filename
@@ -32,7 +32,7 @@ module Anon
     # Reads each line from the incoming file, processes it using the block
     # and saves the return value of the block to the outgoing file.
     def map_lines
-      while inline = input.gets do
+      while (inline = input.gets)
         output.puts yield(inline)
       end
     end

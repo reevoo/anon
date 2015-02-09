@@ -6,7 +6,7 @@ require 'csv'
 module Anon
   # Replaces the contents of a set of columns with anonymous e-mails.
   class CSV < Base
-    def initialize(incoming_filename, outgoing_filename, columns_to_anonymise, has_header=true)
+    def initialize(incoming_filename, outgoing_filename, columns_to_anonymise, has_header = true)
       @input = incoming_filename
       @output = outgoing_filename
       @columns_to_anonymise = columns_to_anonymise
@@ -40,7 +40,7 @@ module Anon
     # and saves the return value of the block to the outgoing file.
     def map_lines
       @headers = @has_header ? input.gets : nil
-      while inline = input.gets do
+      while (inline = input.gets)
         output.puts yield(inline)
       end
     end
