@@ -16,7 +16,7 @@ module Anon
 
     option :columns,
            aliases: [:c],
-           desc: 'columns to anonymise, zero indexed, comma separated e.g. 0,1,5',
+           desc: 'columns to anonymise, by index or name e.g. 0,1,5 or email-address,other_email',
            required: true
 
     option :header,
@@ -55,7 +55,7 @@ module Anon
     end
 
     def column_array
-      options[:columns].split(',').map(&:to_i)
+      options[:columns].split(',')
     end
   end
 end
