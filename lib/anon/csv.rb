@@ -6,9 +6,9 @@ require 'csv'
 module Anon
   # Replaces the contents of a set of columns with anonymous e-mails.
   class CSV < Base
-    def initialize(incoming_filename, outgoing_filename, columns_to_anonymise, has_header = true)
-      @input = incoming_filename
-      @output = outgoing_filename
+    def initialize(input, output, columns_to_anonymise, has_header = true)
+      @input = input
+      @output = output
       @columns_to_anonymise = columns_to_anonymise
       @has_header = has_header
     end
