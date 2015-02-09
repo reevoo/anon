@@ -1,5 +1,7 @@
 # anon
 
+[![Gem Version](https://badge.fury.io/rb/anon.svg)](http://badge.fury.io/rb/anon)
+
 Because ISO say so.
 
 anon can be used to replace personal e-mail addresses with anonymous (fake) ones. This is useful when transferring personally sensitive data.
