@@ -10,7 +10,7 @@ describe Anon::CSV do
     end
 
     let(:output_stream) { StringIO.new }
-    let(:columns) { ['0'] }
+    let(:columns) { '0' }
 
     context 'with headers' do
       let(:headers) { true }
@@ -30,7 +30,7 @@ describe Anon::CSV do
       end
 
       context 'with named columns' do
-        let(:columns) { %w(email bar) }
+        let(:columns) { 'email,bar' }
 
         it 'anonymises the correct columns' do
           output_stream.rewind
@@ -40,6 +40,19 @@ describe Anon::CSV do
           expect(output_stream.gets).to eq nil
         end
       end
+
+      context 'without named columns' do
+        let(:columns) { nil }
+
+        it 'guesses the columns to anonymise' do
+          output_stream.rewind
+          expect(output_stream.gets).to eq "email,foo,bar\n"
+          expect(output_stream.gets).to eq "anon1@anon.com,34545,bannas\n"
+          expect(output_stream.gets).to eq "anon2@anon.com,124353,apples\n"
+          expect(output_stream.gets).to eq nil
+        end
+      end
+
     end
 
     context 'without headers' do

@@ -16,8 +16,8 @@ module Anon
 
     option :columns,
            aliases: [:c],
-           desc: 'columns to anonymise, by index or name e.g. 0,1,5 or email-address,other_email',
-           required: true
+           desc: 'columns to anonymise, by index or name
+e.g. 0,1,5 or email-address,other_email, guesses based on header if ommited'
 
     option :header,
            type: :boolean,
@@ -26,7 +26,7 @@ module Anon
 
     def csv
       require 'anon/csv'
-      Anon::CSV.anonymise!(input, output, column_array, options[:header])
+      Anon::CSV.anonymise!(input, output, options[:columns], options[:header])
     end
 
     desc 'text [OPTIONS]', 'Anonymise a text file'
@@ -52,10 +52,6 @@ module Anon
 
     def output
       options[:outfile] ? File.open(options[:outfile], 'w') : $stdout
-    end
-
-    def column_array
-      options[:columns].split(',')
     end
   end
 end

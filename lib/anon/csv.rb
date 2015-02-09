@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'anon/base'
+require 'anon/csv/columns'
 require 'csv'
 
 module Anon
@@ -17,9 +18,7 @@ module Anon
     def anonymise!
       start_progress
       map_lines do |line|
-        columns_to_anonymise.each do |anon_index|
-          line[anon_index] = anonymous_email(line[anon_index])
-        end
+        anonymise(line)
         increment_progress
         line
       end
@@ -30,6 +29,12 @@ module Anon
 
     attr_reader :has_header
 
+    def anonymise(line)
+      columns.to_anonymise.each do |anon_index|
+        line[anon_index] = anonymous_email(line[anon_index])
+      end
+    end
+
     def input
       @_input ||= ::CSV.new(@input, headers: has_header)
     end
@@ -38,10 +43,9 @@ module Anon
       @_output ||= ::CSV.new(@output, write_headers: has_header, headers: headers)
     end
 
-    def columns_to_anonymise
-      @_col_memo ||= @columns_to_anonymise.map { |c| Integer(c) }
-    rescue ArgumentError
-      @_col_memo = @columns_to_anonymise
+
+    def columns
+      @_columns ||= Columns.new(@columns_to_anonymise, input.headers)
     end
 
     # Reads each line from the incoming file, processes it using the block

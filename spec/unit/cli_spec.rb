@@ -38,7 +38,7 @@ describe Anon::CLI do
 
   describe '#csv' do
     it 'calls the csv anonomiser with the correct columns' do
-      expect(Anon::CSV).to receive(:anonymise!).with($stdin, $stdout, %w(1 4 7), nil)
+      expect(Anon::CSV).to receive(:anonymise!).with($stdin, $stdout, '1,4,7', nil)
       subject.options = { columns: '1,4,7' }
       subject.csv
     end

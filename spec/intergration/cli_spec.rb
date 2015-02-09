@@ -67,5 +67,10 @@ FNY7dujh, 15/11/1856,anon2@anon.com, CZ1 NJ7, books > dusty, automatic
       let(:output) { `bin/anon csv -i spec/fixture/csv_with_headers.csv -c e---mail` }
       specify { expect(output).to eq expected_output }
     end
+
+    describe 'automatic header detection' do
+      let(:output) { `bin/anon csv -i spec/fixture/csv_with_headers.csv` }
+      specify { expect(output).to eq expected_output }
+    end
   end
 end
