@@ -63,8 +63,8 @@ module Anon
     end
 
     def output_progress
-      print "Working... #{@progress}\r"
-      $stdout.flush
+      $stderr.print "Working... #{@progress}\r"
+      $stderr.flush
     end
   end
 end
