@@ -7,7 +7,7 @@ anon can be used to replace personal e-mail addresses with anonymous (fake) ones
 ## Features
 
 - Scans and replaces e-mail addresses in a file.
-- Replaces all data in one or more CSV columns with anonymous e-mail addresses.
+- Replaces all data in one or more CSV columns with anonymous e-mail addresses. (Supports auto-detection of e-mail columns or use of column headers/indices)
 - The same personal e-mail address will be replaced with the same anonymous e-mail address within the file.
 - Command-Line Interface with I/O support
 
