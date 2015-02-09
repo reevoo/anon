@@ -3,7 +3,7 @@ require 'fileutils'
 
 describe 'The comand line interface' do
   let(:expected_output) do
-    'pgid_sku, contract start date, e---mail, post_code, product_category, transmission_type
+    'pgid_sku,contract start date,e---mail,post_code,product_category,transmission_type
 F^u4bgebdfds, 15/07/1756,anon1@anon.com, XY1 TH7, jokes > joke books, oily
 FNY7dujh, 15/11/1856,anon2@anon.com, CZ1 NJ7, books > dusty, automatic
 '
@@ -60,6 +60,11 @@ FNY7dujh, 15/11/1856,anon2@anon.com, CZ1 NJ7, books > dusty, automatic
       end
 
       let(:output) { `bin/anon csv -c 2 -i spec/fixture/csv_without_headers.csv --no-header` }
+      specify { expect(output).to eq expected_output }
+    end
+
+    describe 'named headers' do
+      let(:output) { `bin/anon csv -i spec/fixture/csv_with_headers.csv -c e---mail` }
       specify { expect(output).to eq expected_output }
     end
   end
