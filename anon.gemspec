@@ -13,14 +13,14 @@ Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.executables  = ['anon']
 
-  s.required_ruby_version = '~> 2'
+  s.required_ruby_version = ['>= 1.9', '< 3.0']
 
-  s.add_runtime_dependency 'time_difference', '~> 0'
-  s.add_runtime_dependency 'thor', '~> 0'
+  s.add_runtime_dependency 'time_difference', '~> 0.3'
+  s.add_runtime_dependency 'thor', '~> 0.19'
 
-  s.add_development_dependency 'rspec', '~> 3'
-  s.add_development_dependency 'simplecov', '~> 0'
-  s.add_development_dependency 'reevoocop', '~> 0'
-  s.add_development_dependency 'rake', '~> 10'
-  s.add_development_dependency 'codeclimate-test-reporter', '~> 0'
+  s.add_development_dependency 'rspec', '~> 3.2'
+  s.add_development_dependency 'simplecov', '~> 0.9'
+  s.add_development_dependency 'reevoocop', '~> 0.0'
+  s.add_development_dependency 'rake', '~> 10.4'
+  s.add_development_dependency 'codeclimate-test-reporter', '~> 0.4'
 end
