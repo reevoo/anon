@@ -5,8 +5,13 @@ require 'anon/csv/columns'
 require 'csv'
 
 module Anon
-  # Replaces the contents of a set of columns with anonymous e-mails.
+  # Replaces the contents of a set of columns in a CSV stream with anonymous e-mails.
   class CSV < Base
+    # Returns a new instance of the CSV anonymiser
+    # @param input [IO, #gets] the stream to read from
+    # @param output [IO, #puts] the stream to write to
+    # @param columns_to_anonymise [String] a comma seperated list of columns to anonymise, if nil we guess
+    # @param has_header [Boolean] defaults to true
     def initialize(input, output, columns_to_anonymise, has_header = true)
       @input = input
       @output = output

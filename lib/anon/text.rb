@@ -3,15 +3,18 @@
 require 'anon/base'
 
 module Anon
-  # Anonymises any detected e-mail address in a text file.
+  # Anonymises any detected e-mail address in a text stream
   class Text < Base
     # From the email regex research: http://fightingforalostcause.net/misc/2006/compare-email-regex.php
     # Authors: James Watts and Francisco Jose Martin Moreno
     EMAIL_REGEX = /([\w\!\#\z\%\&\'\*\+\-\/\=\?\\A\`{\|\}\~]+\.)*[\w\+-]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)/i # rubocop:disable Metrics/LineLength
 
-    def initialize(incoming_filename, outgoing_filename)
-      @input = incoming_filename
-      @output = outgoing_filename
+    # Returns a new instance of the Text anonymiser
+    # @param input [IO, #gets] the stream to read from
+    # @param output [IO, #puts] the stream to write to
+    def initialize(input, output)
+      @input = input
+      @output = output
     end
 
     # Anonymises any e-mail addresses found in the text

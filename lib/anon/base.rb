@@ -3,12 +3,15 @@
 require 'time_difference'
 
 module Anon
-  # Anonymiser base class
+  # Anonymiser base class anonymiser implimentations should inherit from
   class Base
 
     # Performs anonymisation
-    def self.anonymise!(*args)
-      new(*args).anonymise!
+    # @param input [IO, gets] the input stream
+    # @param output [IO, puts] the output stream
+    # @param args [*] class specific options
+    def self.anonymise!(input, output, *args)
+      new(input, output, *args).anonymise!
     end
 
     protected
@@ -18,6 +21,8 @@ module Anon
     #
     # The same personal e-mail will be replaced
     # with the same anonymous e-mail.
+    # @param personal_email [String]
+    # @return [String] anonomised email
     def anonymous_email(personal_email)
       @anonymised_emails ||= {}
 

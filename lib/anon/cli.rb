@@ -24,6 +24,10 @@ e.g. 0,1,5 or email-address,other_email, guesses based on header if ommited'
            default: true,
            desc: 'if the csv file to be processed has a header row'
 
+    # The cli command to launch the CSV anonymiser
+    # Input and output may be set to filepaths, or default to stdin and out
+    # The columns to be anonymised can be set, or we default to a detection stratergy if there is a header row
+    # Optionly we can choose to process files without a header row, but then columns must be set
     def csv
       require 'anon/csv'
       Anon::CSV.anonymise!(input, output, options[:columns], options[:header])
@@ -39,6 +43,8 @@ e.g. 0,1,5 or email-address,other_email, guesses based on header if ommited'
            aliases: [:o],
            desc: 'output filename write to, writes to STDOUT if ommited'
 
+    # The cli command to launch the Text anonymiser
+    # Input and output may be set to filepaths, or default to stdin and out
     def text
       require 'anon/text'
       Anon::Text.anonymise!(input, output)
