@@ -4,6 +4,7 @@
 [![Code Climate](https://codeclimate.com/github/reevoo/anon/badges/gpa.svg)](https://codeclimate.com/github/reevoo/anon)
 [![Test Coverage](https://codeclimate.com/github/reevoo/anon/badges/coverage.svg)](https://codeclimate.com/github/reevoo/anon)
 [![Build Status](https://travis-ci.org/reevoo/anon.svg?branch=master)](https://travis-ci.org/reevoo/anon)
+[![Inline docs](http://inch-ci.org/github/reevoo/anon.svg?branch=master)](http://inch-ci.org/github/reevoo/anon)
 
 Because ISO say so.
 
