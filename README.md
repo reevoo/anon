@@ -19,7 +19,7 @@ anon can be used to replace personal e-mail addresses with anonymous (fake) ones
 
 ## Setup
 
-On your command line:
+On your command line (which has [Ruby](https://www.ruby-lang.org) installed):
 ```
 gem install anon
 ```
