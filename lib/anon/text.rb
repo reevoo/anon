@@ -7,7 +7,7 @@ module Anon
   class Text < Base
     # From the email regex research: http://fightingforalostcause.net/misc/2006/compare-email-regex.php
     # Authors: James Watts and Francisco Jose Martin Moreno
-    EMAIL_REGEX = /([\w\!\#\z\%\&\'\*\+\-\/\=\?\\A\`{\|\}\~]+\.)*[\w\+-]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)/i # rubocop:disable Metrics/LineLength
+    EMAIL_REGEX = /[^\s@]+@[^\s@\.]+\.[^\s@]+/i
 
     # Returns a new instance of the Text anonymiser
     # @param input [IO, #gets] the stream to read from
